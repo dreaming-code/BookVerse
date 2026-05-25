@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;">
+
+  <title>BookVerse Library</title>
+  <link rel="stylesheet" href="librarystyle.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+</head>
+<body>
+  <div class="sidebar">
+    <a href="index.html"><h1 class="logo">BV</h1></a>
+    <ul>
+    <div class="sidebar hide">
+    <a href="#map" class="icon" data-tooltip="Search"><i class="fas fa-search"></i></a>
+    <a href="#fea" class="icon" data-tooltip="Featured Books"><i class="fas fa-star"></i></a>
+    <a href="#rel" class="icon" data-tooltip="New Releases"><i class="fas fa-bolt"></i></a>
+    <a href="#stash" class="icon" data-tooltip="Continue Reading"><i class="fas fa-book-open"></i></a>
+    <a href="#fav" class="icon" data-tooltip="Favourites"><i class="fas fa-heart"></i></a>
+    <a href="#ab" class="icon" data-tooltip="About"><i class="fas fa-circle-info"></i></a>
+    <a href="#contact" class="icon" data-tooltip="Contact"><i class="fas fa-envelope"></i></a>
+    <a href="chat.html" class="icon" data-tooltip="Chat"><i class="fas fa-comments"></i></a>
+    <a href="user-dashboard.html" class="icon" data-tooltip="My_Account" id="myAccountLink"><i class="fa-solid fa-user"></i></a>
+  </div>
+</ul>
+  </div>
+
+  <div class="main" id="operty">
+  
+     <div class="qwerty">
+    <section id="login" class="log">
+    <div class="sign">
+       <div class="logist">
+        <video autoplay loop muted class="video">
+  <source src="video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+       </div>
+       <div class="logist" id="signIn">
+      <form class="sign2">
+      <p class="sign2in">Let's resume our Journey</p>
+      <label class="label">Email : </label>
+      <input type="text" placeholder="Username" class="inp1">
+      <label class="label">Password : </label>
+      <input type="password" placeholder="Password" class="inp1">
+      <label class="label">Admin : </label>
+      <input type="text" placeholder="Y for yes or N for no" class="inp1">
+      <button type="submit" class="sign_sub">Sign In</button>
+      <button type="button" class="sign_sub google-btn" onclick="window.location.href='/api/auth/google'">
+        <i class="fab fa-google"></i> Sign in with Google
+      </button>
+      <a href="#signUp" id="linky1">New member ? Sign Up</a>
+      </form>
+      </div>
+      
+    </div>
+    </section>
+  <section class="log hide" id="signUp">
+<div class="sign">
+       <div class="logist">
+        <video autoplay loop muted class="video">
+  <source src="video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+       </div>
+       <div class="logist" id="signup">
+      <form class="sign2">
+      <p class="sign2in">Let's Unlock the Depths Together</p>
+      <label class="label">Name : </label>
+      <input type="text" placeholder="Username" class="inp1">
+      <label class="label">Email : </label>
+      <input type="text" placeholder="Email" class="inp1">
+      <label class="label">Create Password : </label>
+      <input type="password" placeholder="Password" class="inp1">
+      <label class="label">Re-enter Password : </label>
+      <input type="password" placeholder="Password" class="inp1">
+      <button type="submit" class="sign_sub">Sign Up</button>
+      <button type="button" class="sign_sub google-btn" onclick="window.location.href='/api/auth/google'">
+        <i class="fab fa-google"></i> Sign up with Google
+      </button>
+      <a href="#signIn" id="linky2">Already a user ? Sign In</a>
+      </form>
+      </div>
+      </div>
+   </section>
+    <section id="admin" class="hiddenkig">
+</section>
+ <section id="map" class="hide">
+      <h1 id="hj">Search</h1>
+      <h1>📚 E-Library Book Search</h1>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search books by title, author..." />
+    <button id="searchBtn">🔍 Search</button>
+  </div>
+ <div id="loader" class="loader" style="display: none;"></div>
+  <div id="results" class="results-container"></div>
+    </section>
+    <!-- BEST BOOK -->
+    <section class="bottom hide">
+      <div class="best-book">
+        <h3>Best Book</h3>
+        <div class="card">
+          <img id="best" src="https://tse4.mm.bing.net/th/id/OIP.XimdWGazcq2a2aB4ync9JwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="" >
+          <div class="info">
+            <h4>The Problem with Forever</h4>
+            <p>By Jennifer L. Armentrout</p>
+            <p>Winner of the week’s most-read award. A beautifully written tale of love, hope, and forgiveness.</p>
+            <button id="readMoreBtn23">Read More</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POPULAR -->
+      <section class="popular-books">
+  <h2>📚 Popular Books</h2>
+<div>
+  <label for="genreSelect" class="genre-label">Choose Genre:</label>
+  <select id="genreSelect">
+    <option value="all">All</option>
+    <option value="computer networks">Computer networks</option>
+    <option value="dbms">DBMS</option>
+    <option value="oops">OOPS</option>
+    <option value="fiction">Fiction</option>
+    <option value="fantasy">Fantasy</option>
+    <option value="self-help">Self Help</option>
+    <option value="mystery">Mystery</option>
+    <option value="biography">Biography</option>
+    <option value="non-fiction">Non-Fiction</option>
+  </select>
+</div>
+  <div class="book-grid" id="bookGrid" >
+    <div class="book" data-genre="fiction" data-name="The Midnight Library" data-author="Matt Haig">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.0oxD3WjMHttXNlD6EHxGbQHaKc?rs=1&pid=ImgDetMain&o=7&rm=3" alt="The Midnight Library" />
+      <div class="book-info">
+    <h4>The Midnight Library</h4>
+    <p>Matt Haig</p>
+  </div>
+    </div>
+    <div class="book" data-genre="self-help" data-name="Atomic Habits" data-author="James Clear">
+      <img src="https://m.media-amazon.com/images/I/91bYsX41DVL.jpg" alt="Atomic Habits" />
+       <div class="book-info">
+    <h4>Atomic Habits</h4>
+    <p>James Clear</p>
+  </div>
+    </div>
+    <div class="book" data-genre="fantasy" data-name="Harry Potter" data-author="J.K. Rowling">
+      <img src="https://m.media-amazon.com/images/I/81YOuOGFCJL.jpg" alt="Harry Potter" />
+      <div class="book-info">
+    <h4>Harry Potter</h4>
+    <p>J.K. Rowling</p>
+  </div>
+    </div>
+    <div class="book" data-genre="fiction" data-name="The Alchemist" data-author="Paulo Coelho">
+      <img src="https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg" alt="The Alchemist" />
+      <div class="book-info">
+    <h4>The Alchemist</h4>
+    <p>Paulo Coelho</p>
+  </div>
+    </div>
+    <div class="book" data-genre="self-help" data-name="The Subtle Art of Not Giving a F*ck" data-author="Mark Manson">
+      <img src="https://m.media-amazon.com/images/I/71QKQ9mwV7L.jpg" alt="The Subtle Art of Not Giving a F*ck" />
+      <div class="book-info">
+    <h4>The Subtle Art of Not Giving a F*ck</h4>
+    <p>Mark Manson</p>
+  </div>
+    </div>
+    <div class="book" data-genre="mystery" data-name="Gone Girl" data-author="Gillian Flynn">
+      <img src="https://m.media-amazon.com/images/I/81af+MCATTL.jpg" alt="Gone Girl" />
+      <div class="book-info">
+    <h4>Gone Girl</h4>
+    <p>Gillian Flynn</p>
+  </div>
+    </div>
+  </div>
+       </section>
+
+  <!-- INFO BOX (on hover) -->
+  <div id="hidinginfobox"><div class="info-box">
+    <img src="" alt="Book Cover" />
+    <div class="details">
+      <h4></h4>
+      <p class="author"></p>
+      <button>Summary</button>
+      <span class="close-info">×</span>
+    </div>
+  </div>
+
+  <!-- SUMMARY MODAL -->
+  <div class="modal" id="summaryModal">
+    <div class="modal-content">
+      <span class="close">×</span>
+      <img id="modalBookCover" class="modal-cover" src="" alt="Book Cover">
+      <div id="summaryText"></div>
+      <button id="readMoreBtn">Read More</button>
+    </div>
+  </div></div>
+  <div id="ab"></div>
+    </section>
+
+
+<header class="hide">
+      <h2 class="poppy" id="rel" >New Released</h2>
+    </header>
+
+  <section class="my-books hide" id="list_books_rel">
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/81bGKUa1e0L.jpg" alt=""></div>
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/91bYsX41DVL.jpg" alt=""></div>
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/81YOuOGFCJL.jpg" alt=""></div>
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/91bYsX41DVL.jpg" alt=""></div>
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/81YOuOGFCJL.jpg" alt=""></div>
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg" alt=""></div>
+  <div class="book book-rele"><img src="https://m.media-amazon.com/images/I/71QKQ9mwV7L.jpg" alt=""></div>
+</section>
+<header class="hide">
+      <h2 class="poppy"  id="fea" >Featured Books</h2>
+    </header>
+
+    <!-- MY BOOKS -->
+  <section class="my-books hide" id="list_books">
+  <div class="book"><img src="https://cdn.shopify.com/s/files/1/0070/1884/0133/t/8/assets/pf-b57dac15--Books8_1200x.jpg?v=1620061403" alt=""></div>
+  <div class="book"><img src="https://m.media-amazon.com/images/I/91bYsX41DVL.jpg" alt=""></div>
+  <div class="book"><img src="https://m.media-amazon.com/images/I/81YOuOGFCJL.jpg" alt=""></div>
+  <div class="book"><img src="https://tse3.mm.bing.net/th/id/OIP.VvBkzvsXF0y9Cq14JiHK4AHaLY?rs=1&pid=ImgDetMain&o=7&rm=3" alt=""></div>
+  <div class="book"><img src="https://m.media-amazon.com/images/I/91Sx-X2kEHL._SL1500_.jpg" alt=""></div>
+  <div class="book"><img src="https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg" alt=""></div>
+  <div class="book"><img src="https://tse2.mm.bing.net/th/id/OIP.CcNbkI59wiz3dh2JKjOX9AAAAA?w=324&h=500&rs=1&pid=ImgDetMain&o=7&rm=3" alt=""></div>
+</section>
+<header class="hide">
+      <h2 class="poppy" id="fav">Favorite Books</h2>
+    </header>
+
+    <!-- MY BOOKS -->
+  <section class="my-books hide" id="list_books_fav"></section>
+<header class="hide">
+      <h2 class="poppy" id="stash">Stashed Books</h2>
+    </header>
+
+  <section class="my-books hide" id="list_books_stash"></section>
+
+
+     <section id="about" class="hide8 hide">
+  <h2>🧠 About BookVerse</h2>
+  <p>Welcome to <strong>BookVerse</strong> — your digital gateway to endless stories, knowledge, and imagination.</p>
+
+  <p>Our mission is to make reading accessible for everyone by combining the power of technology with the beauty of books. 
+  We offer a growing library of digital titles — from timeless classics to the latest releases — available anytime, anywhere.</p>
+
+  <h3>🌍 What We Do</h3>
+  <ul>
+    <li>Provide access to thousands of books, journals, and research papers.</li>
+    <li>Offer a seamless reading experience with cloud-synced progress.</li>
+    <li>Encourage book lovers to connect, share, and explore together.</li>
+  </ul>
+
+  <h3>🤝 Our Team</h3>
+  <p>BookVerse was created by a passionate team of developers and readers who believe technology can make learning and storytelling universal.</p>
+<a href="#contact"><button id="contactBtnHome">📞 Contact Us</button></a>
+</section>
+    </section>
+  <section id="contact" class="hide">
+      <div class="contact-wrapper">
+    <div class="contact-card">
+      <!-- Left Panel -->
+      <div class="left-panel">
+        <h1>Contact Us</h1>
+        <p>
+          Have a question, suggestion, or collaboration idea?  
+          We’d love to hear from you! Fill out the form and we’ll get back soon.
+        </p>
+
+        <div class="social-links">
+          <a href="#" target="_blank" class="social facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" class="social twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" target="_blank" class="social instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" target="_blank" class="social linkedin"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+
+        <div class="decorations">
+          <div class="triangle"></div>
+          <div class="cross">×</div>
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="right-panel">
+        <h2>Send a Message</h2>
+        <form>
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Enter your name" required />
+          </div>
+
+          <div class="input-group">
+            <label>Email</label>
+            <input type="email" placeholder="youremail@example.com" required />
+          </div>
+
+          <div class="input-group">
+            <label>Subject</label>
+            <input type="text" placeholder="Subject" required />
+          </div>
+
+          <div class="input-group">
+            <label>Message</label>
+            <textarea placeholder="Write your message..." rows="5" required></textarea>
+          </div>
+
+          <div class="checkbox">
+            <input type="checkbox" id="newsletter" />
+            <label for="newsletter">Subscribe to our newsletter</label>
+          </div>
+
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+    </section>
+    </div>
+    <hr>
+    <footer id="footer" class="hide">
+      <div id="footer_div1">
+        <button class="footer_but"><i class="op fa-brands fa-instagram " style="color: #000000;"></i><span class="ol">Follow us on Instagram</span></button>
+        <button class="footer_but"><i class="op fa-brands fa-linkedin-in " style="color: #000000;"></i><span class="ol">Follow us on LinkedIn</span></button>
+        <button class="footer_but"><i class="op fa-brands fa-twitter " style="color: #000000;"></i><span class="ol">Follow us on Twitter</span></button>
+        <button class="footer_but"><i class="op fa-brands fa-etsy " style="color: #000000;"></i><span class="ol">Follow us on Etsy</span></button>
+      </div>
+      <div id="footer_div2">
+        <span class="foot">For collaboration enquiries email us at</span>
+        <span class="foot2"><i class="fa-solid fa-envelope fa-beat-fade" style="color: #ffffff;"></i> collab@shiningtides.io</span>
+        <span class="bottom_p1">Copy the above email to your clipboard</span>
+      </div>
+      <div class="footer_div3"> 
+        <div class=foot_div3_in><span class="bottom_p1">©2025 Book Verse. All rights reserved.</span></div>
+         <div class=foot_div3_in>
+        <div class="social">
+        <span class="bgimg"><i class="po fa-brands fa-instagram" style="color: white;"></i></span>
+        <span class="bgimg"><i class="po fa-brands fa-twitter" style="color: #ffffff;"></i></span>
+        <span class="bgimg"><i class="po fa-brands fa-linkedin-in" style="color: #ffffff;"></i></span>
+        <span class="bgimg"><i class="po fa-brands fa-etsy" style="color: #ffffff;"></i></span>
+        </div></div>
+        <div class=foot_div3_in>
+        <span class="bottom_p1">Privacy Policy</span>
+        <span class="bottom_p1">About</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script src="state-helpers.js"></script>
+  <script src="https://unpkg.com/sendbird/browser/sendbird.min.js"></script>
+  <script src="lscript.js"></script>
+<script async type='module' src='https://interfaces.zapier.com/assets/web-components/zapier-interfaces/zapier-interfaces.esm.js'></script>
+<zapier-interfaces-chatbot-embed is-popup='true' chatbot-id='cmhoqn7cy001o909pqz7kttru'></zapier-interfaces-chatbot-embed>
+</html>

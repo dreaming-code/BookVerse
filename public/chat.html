@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatSphere - Community Chat</title>
+  <link rel="stylesheet" href="chat_style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- AUTH SCREEN -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-bg">
+      <div class="floating-shape s1"></div>
+      <div class="floating-shape s2"></div>
+      <div class="floating-shape s3"></div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M24 4C12.954 4 4 12.954 4 24c0 3.824 1.074 7.394 2.934 10.426L4 44l9.574-2.934A19.912 19.912 0 0024 44c11.046 0 20-8.954 20-20S35.046 4 24 4z" fill="url(#g1)"/>
+            <path d="M16 20h16M16 26h10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+            <defs><linearGradient id="g1" x1="4" y1="4" x2="44" y2="44"><stop stop-color="#7C3AED"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs>
+          </svg>
+        </div>
+        <h1>ChatSphere</h1>
+        <p class="auth-subtitle">Connect. Chat. Collaborate.</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form active">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter your username" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn-primary">Sign In</button>
+        <button type="button" class="btn-primary google-btn" onclick="window.location.href='/api/auth/google?redirect=chat'">
+          <i class="fab fa-google"></i> Sign in with Google
+        </button>
+        <p class="auth-switch">Don't have an account? <a href="#" id="showSignup">Sign Up</a></p>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label>Display Name</label>
+          <input type="text" id="signupName" placeholder="Your display name" required>
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="signupUsername" placeholder="Choose a username" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required>
+        </div>
+        <button type="submit" class="btn-primary">Create Account</button>
+        <button type="button" class="btn-primary google-btn" onclick="window.location.href='/api/auth/google?redirect=chat'">
+          <i class="fab fa-google"></i> Sign up with Google
+        </button>
+        <p class="auth-switch">Already have an account? <a href="#" id="showLogin">Sign In</a></p>
+      </form>
+      <div id="authError" class="auth-error"></div>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="appScreen" class="app-screen hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="current-user" id="currentUserInfo">
+          <div class="avatar avatar-sm" id="sidebarAvatar"></div>
+          <span class="user-display-name" id="sidebarName"></span>
+        </div>
+        <div class="sidebar-actions">
+          <button class="icon-btn" id="btnNewGroup" title="New Group">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </button>
+          <button class="icon-btn" id="btnAllUsers" title="All Users">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </button>
+          <button class="icon-btn" id="btnProfile" title="Profile Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.32 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          </button>
+          <button class="icon-btn" id="btnLogout" title="Logout">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="searchChats" placeholder="Search conversations...">
+      </div>
+
+      <div class="sidebar-tabs">
+        <button class="tab active" data-tab="chats">Chats</button>
+        <button class="tab" data-tab="groups">Groups</button>
+      </div>
+
+      <div class="conversations-list" id="conversationsList"></div>
+    </aside>
+
+    <!-- MAIN CHAT AREA -->
+    <main class="chat-area" id="chatArea">
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-illustration">
+          <svg viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="80" fill="url(#eg)" opacity="0.1"/>
+            <path d="M70 85h60M70 100h40M70 115h50" stroke="url(#eg)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M100 40C66.86 40 40 66.86 40 100c0 11.47 3.22 22.19 8.8 31.28L40 160l28.72-8.8A59.73 59.73 0 00100 160c33.14 0 60-26.86 60-60s-26.86-60-60-60z" stroke="url(#eg)" stroke-width="3"/>
+            <defs><linearGradient id="eg" x1="40" y1="40" x2="160" y2="160"><stop stop-color="#7C3AED"/><stop offset="1" stop-color="#2563EB"/></linearGradient></defs>
+          </svg>
+        </div>
+        <h2>Welcome to ChatSphere</h2>
+        <p>Select a conversation or start a new chat</p>
+      </div>
+
+      <!-- Active Chat -->
+      <div class="active-chat hidden" id="activeChat">
+        <div class="chat-header">
+          <button class="icon-btn back-btn" id="btnBack">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="avatar avatar-sm" id="chatAvatar"></div>
+          <div class="chat-header-info">
+            <h3 id="chatName"></h3>
+            <span class="chat-status" id="chatStatus"></span>
+          </div>
+          <div class="chat-header-actions">
+            <button class="icon-btn" id="btnChatInfo" title="Chat Info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="messages-container" id="messagesContainer"></div>
+
+        <div class="chat-input-area">
+          <button class="icon-btn" id="btnEmoji" title="Emoji">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+          </button>
+          <button class="icon-btn" id="btnAttach" title="Attach File">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+          <input type="file" id="fileInput" class="hidden-input">
+          <div class="message-input-wrap">
+            <textarea id="messageInput" placeholder="Type a message..." rows="1"></textarea>
+          </div>
+          <button class="send-btn" id="btnSend">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+
+        <!-- Join Group Bar -->
+        <div class="join-group-bar hidden" id="joinGroupBar">
+          <p>You're not a member of this group.</p>
+          <button class="btn-primary" id="btnJoinGroup" style="width:auto;padding:10px 32px;">Join Group</button>
+        </div>
+
+        <!-- Emoji Picker -->
+        <div class="emoji-picker hidden" id="emojiPicker">
+          <div class="emoji-picker-header">
+            <input type="text" id="emojiSearch" placeholder="Search emoji...">
+          </div>
+          <div class="emoji-grid" id="emojiGrid"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- INFO PANEL -->
+    <aside class="info-panel hidden" id="infoPanel">
+      <div class="info-panel-header">
+        <h3>Details</h3>
+        <button class="icon-btn" id="btnCloseInfo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="info-panel-content" id="infoPanelContent"></div>
+    </aside>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Create Group Modal -->
+  <div class="modal-overlay hidden" id="modalCreateGroup">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Create New Group</h3>
+        <button class="icon-btn modal-close" data-close="modalCreateGroup">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Group Name</label>
+          <input type="text" id="groupName" placeholder="Enter group name">
+        </div>
+        <div class="form-group">
+          <label>Group Avatar</label>
+          <div class="avatar-upload-area">
+            <div class="avatar avatar-lg" id="groupAvatarPreview">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <button class="btn-secondary btn-sm" id="btnGroupAvatar">Choose Image</button>
+            <input type="file" id="groupAvatarInput" accept="image/*" class="hidden-input">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Add Members</label>
+          <input type="text" id="searchMembers" placeholder="Search users...">
+          <div class="members-select-list" id="membersSelectList"></div>
+        </div>
+        <div class="form-group">
+<select id="groupPrivacy">
+  <option value="public">Public Group</option>
+  <option value="private">Private Group</option>
+</select>
+</div>
+        <div class="selected-members" id="selectedMembers"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="modalCreateGroup">Cancel</button>
+        <button class="btn-primary" id="btnCreateGroup">Create Group</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Users Modal -->
+  <div class="modal-overlay hidden" id="modalAllUsers">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>All Users</h3>
+        <button class="icon-btn modal-close" data-close="modalAllUsers">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" id="searchAllUsers" placeholder="Search users...">
+        </div>
+        <div class="users-list" id="allUsersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div class="modal-overlay hidden" id="modalProfile">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Profile Settings</h3>
+        <button class="icon-btn modal-close" data-close="modalProfile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="profile-avatar-section">
+          <div class="avatar avatar-xl" id="profileAvatarPreview"></div>
+          <button class="btn-secondary btn-sm" id="btnChangeAvatar">Change Photo</button>
+          <input type="file" id="profileAvatarInput" accept="image/*" class="hidden-input">
+        </div>
+        <div class="form-group">
+          <label>Display Name</label>
+          <input type="text" id="profileDisplayName" placeholder="Your display name">
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <input type="text" id="profileStatus" placeholder="What's on your mind?">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="modalProfile">Cancel</button>
+        <button class="btn-primary" id="btnSaveProfile">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Members to Group Modal -->
+  <div class="modal-overlay hidden" id="modalAddMembers">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Add Members</h3>
+        <button class="icon-btn modal-close" data-close="modalAddMembers">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="text" id="searchAddMembers" placeholder="Search users to add...">
+        </div>
+        <div class="members-select-list" id="addMembersSelectList"></div>
+        <div class="selected-members" id="addSelectedMembers"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="modalAddMembers">Cancel</button>
+        <button class="btn-primary" id="btnAddMembersConfirm">Add Members</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Viewer -->
+  <div class="image-viewer hidden" id="imageViewer">
+    <button class="icon-btn image-viewer-close" id="btnCloseViewer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <img id="viewerImage" src="" alt="Preview">
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

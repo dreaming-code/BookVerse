@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - BookVerse</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #0c111d, #151a29, #0d0f1a);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 20px 30px;
+      background: rgba(20, 25, 40, 0.8);
+      border-radius: 16px;
+      border: 1px solid rgba(100, 150, 255, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      color: #00C8FF;
+      text-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #00C8FF, #3757e7);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 200, 255, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 200, 255, 0.4);
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #ff4444, #cc0000);
+      box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+    }
+
+    .btn.danger:hover {
+      box-shadow: 0 8px 25px rgba(255, 68, 68, 0.4);
+    }
+
+    .btn.success {
+      background: linear-gradient(135deg, #10b981, #059669);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn.success:hover {
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+    }
+
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: rgba(30, 33, 47, 0.95);
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid rgba(100, 150, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card.full-width {
+      grid-column: span 2;
+    }
+
+    .card h2 {
+      color: #00C8FF;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(100, 150, 255, 0.3);
+    }
+
+    .book-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      transition: background 0.3s ease;
+    }
+
+    .book-item:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .book-info {
+      flex: 1;
+    }
+
+    .book-title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .book-author {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1d2340, #14192b);
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 700px;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      border: 1px solid rgba(100, 150, 255, 0.2);
+      animation: popIn 0.3s ease;
+    }
+    
+  .icon-btn {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.icon-btn svg { width: 45px; height: 45px; } 
+    /* Custom scrollbar for modal */
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .modal-content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+    
+    .modal-content::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #00C8FF, #3757e7);
+      border-radius: 4px;
+    }
+    
+    .modal-content::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #3757e7, #00C8FF);
+    }
+
+    .modal-content h2 {
+      color: #00C8FF;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, rgba(20, 25, 40, 0.9), rgba(30, 35, 55, 0.9));
+      border: 1px solid rgba(100, 150, 255, 0.3);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #00C8FF;
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.35), inset 0 2px 6px rgba(0, 0, 0, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 25px;
+    }
+
+    .empty-msg {
+      text-align: center;
+      color: #888;
+      padding: 30px;
+    }
+
+    .pending-book-card {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      border: 1px solid #374151;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: #1f2937;
+    }
+
+    .pending-book-card img {
+      width: 120px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .pending-book-info {
+      flex: 1;
+    }
+
+    .pending-book-info h3 {
+      margin: 0 0 8px 0;
+    }
+
+    .pending-book-info p {
+      margin: 0 0 4px 0;
+    }
+
+    .pending-book-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .card.full-width {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    
+    <h1>🔐 BookVerse Admin Dashboard</h1>
+    <div style="display: flex; gap: 12px;">
+      <button class="btn success" onclick="showAddBookForm()">📝 Add New Book</button>
+      <button class="btn danger" onclick="logout()">Logout</button>
+      <button class="icon-btn" id="btnLogout" title="Back to Library" onclick="window.location.href='library.html'">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    </button>
+    </div>
+  </div>
+
+  <div class="dashboard-container">
+    <div class="card full-width">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>📋 Pending Books For Review</h2>
+        <button class="btn" onclick="loadPendingBooks()">🔄 Refresh</button>
+      </div>
+      <div id="pendingBooksList"></div>
+      <p id="noPendingMsg" class="empty-msg">No pending books.</p>
+      <p id="imageUpload"></p>
+    </div>
+  </div>
+
+  <!-- Add Book Modal -->
+  <div id="addBookModal" class="modal">
+    <div class="modal-content">
+      <h2>📝 Add New Book</h2>
+      <form id="addBookForm">
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" name="title" placeholder="Book title" required>
+        </div>
+        <div class="form-group">
+          <label>Author *</label>
+          <input type="text" name="author" placeholder="Author name" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="description" placeholder="Brief description of the book"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Genre</label>
+          <input type="text" name="genre" placeholder="e.g., Fiction, Science Fiction">
+        </div>
+        <div class="form-group">
+          <label>Cover URL</label>
+          <input type="url" name="coverUrl" placeholder="URL to book cover image">
+        </div>
+        <div class="form-group">
+          <label>File URL *</label>
+          <input type="url" name="fileUrl" placeholder="URL to read the book" required>
+        </div>
+      </form>
+      <div class="modal-buttons">
+        <button class="btn" onclick="submitBook()">Add Book</button>
+        <button class="btn danger" onclick="closeAddBookForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Check login status on page load
+    (function() {
+      const token = localStorage.getItem("token");
+      const libraryUser = JSON.parse(localStorage.getItem("user"));
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      
+      if (!token && !libraryUser && !currentUser) {
+        window.location.href = "index_user.html";
+        return;
+      }
+      
+      // Check if user is NOT admin - if yes, redirect to user dashboard
+      const isAdmin = 
+        (libraryUser && libraryUser.admin === "Y") || 
+        (currentUser && currentUser.role === "admin");
+      
+      if (!isAdmin) {
+        window.location.href = "user-dashboard.html";
+      }
+    })();
+  </script>
+  <script src="script2.js"></script>
+</body>
+</html>

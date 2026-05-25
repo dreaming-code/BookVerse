@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top left, #0f0f1a, #090913);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Scene gives 3D depth */
+.scene {
+  perspective: 1800px;
+}
+
+.book {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  transform-style: preserve-3d;
+  transition: transform 1.5s ease-in-out;
+}
+
+/* both sides of the page */
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 2px solid #7c3aed;
+  backface-visibility: hidden;
+  box-shadow: 0 0 25px rgba(124, 58, 237, 0.3);
+}
+
+/* Front face */
+.front {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+
+/* Back face (hidden initially) */
+.back {
+  background: #111122;
+  color: #a78bfa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotateY(180deg);
+}
+
+/* Content styles */
+.content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.content h1 {
+  font-size: 2.8rem;
+  color: #a78bfa;
+}
+
+.content p {
+  margin: 1.2rem 0;
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+button {
+  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.7);
+}
+
+/* Flip animation */
+.book.turn {
+  transform: rotateY(-180deg);
+}
